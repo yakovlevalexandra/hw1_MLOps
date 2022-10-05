@@ -1,0 +1,38 @@
+import flask
+import pandas as pd
+from flask_restx import Api, Resource, fields
+
+app = flask.Flask(__name__)
+api = Api(app)
+
+available_models = ['lin_reg', 'CatBoost']
+model_name = api.model('Resource', {'model': fields.String})
+
+
+@api.route('/available_models')
+class Available_models(Resource):
+
+    def get(self):
+        return available_models
+
+
+@api.route('/fit_model')
+class Fit(Resource):
+
+    @api.expect(model_name)
+    def post(self):
+
+        model = list(api.payload.values())[0]
+        if model not in available_models:
+            return 'Not available model, check method available_models'
+        else:
+            return 'Fit model {0}'.format(model)
+
+
+# waitress-serve --listen=127.0.0.1:5000 MLOps_hw1:app
+# поднимает сервер, в котором можно выполнят описанные выше методы
+# запускать через виртуальное окружение, поскольку там либа waitress
+
+
+# api.payload - что передаём в POST запросе через Jupyter
+# list(api.payload.values()) - так можно прочитать все передаваемые значения
