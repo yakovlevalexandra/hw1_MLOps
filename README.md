@@ -1,11 +1,11 @@
-# hw1_MLOps
+# How to use API
 
 ```python
 import requests
 import json
 ```
 
-#### Добавить модели
+#### Add models
 
 
 ```python
@@ -26,7 +26,7 @@ print(r, r.text)
     
     
 
-#### Обучить модель 1
+#### Fit model 1
 
 
 ```python
@@ -40,7 +40,7 @@ print(r, r.text)
     
     
 
-#### Получить предсказание модели 1
+#### Get predict for model 1
 
 
 ```python
@@ -53,7 +53,7 @@ print(r, r.text)
     
     
 
-#### Получить список доступных моделей
+#### Get all available models
 
 
 ```python
@@ -65,7 +65,7 @@ print(r, r.text)
     
     
 
-#### Обучить модель 2
+#### Fit model 2
 
 
 ```python
@@ -79,7 +79,7 @@ print(r, r.text)
     
     
 
-#### Удалить модель 1
+#### Delete model 1
 
 
 ```python
