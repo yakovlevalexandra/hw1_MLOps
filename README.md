@@ -18,7 +18,7 @@ print(r, r.text)
 headers = {"accept": "application/json", "content-type": "application/json"}
 params = {"model_key": 2, "model_type": "RandomForestClassifier"}
 r = requests.post('http://127.0.0.1:5000/model/add', headers=headers, 
-\                   data=json.dumps(params))
+                   data=json.dumps(params))
 print(r, r.text)
 ```
 
