@@ -34,7 +34,7 @@ def load_model(model_key):
     return model
 
 
-def add_model(model_key, model_type):
+def add_model(model_key, model_type, data):
     """
     Adds new model and saves it.
 
@@ -45,7 +45,7 @@ def add_model(model_key, model_type):
             type of the model ('RandomForestClassifier', 'LogisticRegression')
     """
 
-    added_model = ModelMaker(model_key, model_type)
+    added_model = ModelMaker(model_key, model_type, data)
     save_model(model_key, added_model)
 
 
