@@ -11,6 +11,11 @@ from sklearn.linear_model import LogisticRegression
 def prep_data(data):
     """
     Preprocesses data for a model.
+
+    Parameters
+    ----------
+        data : pd.DataFrame
+            data from './data/hotel_bookings_small.csv'
     """
     num_features = ["lead_time", "arrival_date_week_number", "arrival_date_day_of_month",
                     "stays_in_weekend_nights", "stays_in_week_nights", "adults", "children",
@@ -73,6 +78,8 @@ class ModelMaker:
                  an integer key for the model
             model_type : str
                  type of the model ('RandomForestClassifier', 'LogisticRegression')
+            data : pd.DataFrame
+                data from './data/hotel_bookings_small.csv'
         """
 
         models_dict = {'RandomForestClassifier': RandomForestClassifier(), 'LogisticRegression': LogisticRegression()}
