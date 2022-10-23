@@ -1,5 +1,6 @@
 import flask
 import json
+import pandas as pd
 from model_store import save_model, load_model, add_model, fit_model, model_predict, delete_model
 from flask_restx import Api, Resource, fields
 
@@ -11,7 +12,8 @@ available_models = {}
 
 add_model_params = api.model('Params for adding a model',
                              {'model_key': fields.Integer(description='Model key', example=1),
-                              'model_type': fields.String(description='Model type', example='LogisticRegression')})
+                              'model_type': fields.String(description='Model type', example='LogisticRegression'),
+                              'data': fields.Arbitrary(description='Data for model')})
 
 fit_model_params = api.model('Params for fitting a model',
                              {'model_key': fields.Integer(description='Model key', example=1),
@@ -41,11 +43,12 @@ class AddModel(Resource):
     def post(self):
         model_key = api.payload['model_key']
         model_type = api.payload['model_type']
+        data = pd.DataFrame(json.loads(api.payload['data']))
         if model_type not in ['RandomForestClassifier', 'LogisticRegression']:
             return 'Model type not available, try: RandomForestClassifier, LogisticRegression', 400
         else:
             available_models[model_key] = model_type
-            add_model(model_key, model_type)
+            add_model(model_key, model_type, data)
             return f'Successfully added model {model_key}', 200
 
 
