@@ -3,6 +3,7 @@ import json
 import pandas as pd
 from model_store import save_model, load_model, add_model, fit_model, model_predict, delete_model
 from flask_restx import Api, Resource, fields
+from sqlalchemy import create_engine
 
 
 app = flask.Flask(__name__)
@@ -24,6 +25,16 @@ predict_model_params = api.model('Params for model prediction',
 
 delete_model_params = api.model('Params for model deletion',
                                 {'model_key': fields.Integer(description='Model key', example=1)})
+
+
+def create_database():
+    engine = create_engine('postgresql://postgres:example@db:5432/models_db')
+    df = pd.DataFrame(columns=['model_key', 'model_type'])
+    df.to_sql('models', con=engine, if_exists='replace')
+    return engine
+
+
+engine = create_database()
 
 
 @api.route('/available_models')
@@ -49,6 +60,7 @@ class AddModel(Resource):
         else:
             available_models[model_key] = model_type
             add_model(model_key, model_type, data)
+            # engine.execute(models.insert(), model_key=model_key, model_type=model_type)
             return f'Successfully added model {model_key}', 200
 
 
@@ -100,4 +112,4 @@ class DeleteModel(Resource):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
