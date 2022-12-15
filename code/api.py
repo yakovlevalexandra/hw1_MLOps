@@ -31,7 +31,6 @@ def create_database():
     engine = create_engine('postgresql://postgres:example@db:5432/models_db')
     df = pd.DataFrame(columns=['model_key', 'model_type'])
     df.to_sql('models', con=engine, if_exists='replace')
-    return engine
 
 
 engine = create_database()
